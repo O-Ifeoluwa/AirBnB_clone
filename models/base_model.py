@@ -24,12 +24,12 @@ class BaseModel():
 
     def __str__(self):
         """string representation of the object"""
-        print("{[]} {[]} {}".format(self.__class__.__name__, 
-            self.id, self.__dict__))
+        return "{[]} {[]} {}".format(self.__class__.__name__,
+                self.id, self.__dict__)
 
     def save(self):
         """
-        updates the public instance `updated_at` 
+        updates the public instance `updated_at`
         with the current datetime
         """
         self.updated_at = datetime.now()
@@ -37,7 +37,7 @@ class BaseModel():
 
     def to_dict(self):
         """
-        returns a dictionary containing all keys/values 
+        returns a dictionary containing all keys/values
         of __dict__ of the instance
         """
         my_dict = self.__dict__.copy()
