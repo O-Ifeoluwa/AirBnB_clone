@@ -2,8 +2,12 @@
 """serialization and deserialization"""
 import json
 
+
 class FileStorage():
-    """serializes instances to JSON file and deserializes JSON files to instances"""
+    """
+    serializes instances to JSON file and 
+    deserializes JSON files to instances
+    """
     __file_path = 'file.json'
     __objects = {}
 
@@ -27,10 +31,14 @@ class FileStorage():
             json.dumps(FileStorage.__objects, f, default=str)
 
     def reload(self):
-        """deserializes the JSON file to __objects - only if the JSON file exists"""
+        """
+        deserializes the JSON file to __objects 
+        - only if the JSON file exists
+        """
        try:
            with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
-            FileStorage.__objects = json.load(f)
+               FileStorage.__objects = json.load(f)
         except Exception:
             pass
+
 
