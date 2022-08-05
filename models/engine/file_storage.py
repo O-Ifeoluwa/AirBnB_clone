@@ -5,7 +5,7 @@ import json
 
 class FileStorage():
     """
-    serializes instances to JSON file and 
+    serializes instances to JSON file and
     deserializes JSON files to instances
     """
     __file_path = 'file.json'
@@ -32,13 +32,11 @@ class FileStorage():
 
     def reload(self):
         """
-        deserializes the JSON file to __objects 
+        deserializes the JSON file to __objects
         - only if the JSON file exists
         """
-       try:
-           with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
-               FileStorage.__objects = json.load(f)
+        try:
+            with open(FileStorage,__file_path, 'r', encoding='utf-8') as f:
+                FileStorage.__objects = json.load(f)
         except Exception:
-            pass
-
-
+            print(Exception)
