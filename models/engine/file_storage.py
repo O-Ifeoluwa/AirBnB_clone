@@ -36,7 +36,7 @@ class FileStorage():
         - only if the JSON file exists
         """
         try:
-            with open(FileStorage,__file_path, 'r', encoding='utf-8') as f:
+            with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
                 FileStorage.__objects = json.load(f)
         except Exception:
             print(Exception)
