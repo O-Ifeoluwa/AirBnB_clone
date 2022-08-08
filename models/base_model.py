@@ -1,22 +1,30 @@
 #!/usr/bin/python3
-"""Base module"""
+"""
+base class file
+"""
+
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
-class BaseModel():
-    """BaseModel defines all common attributes/methods for other classes"""
+class BaseModel:
+    """
+    =========
+    BaseModel
+    =========
+    """
+
     def __init__(self, *args, **kwargs):
-        """initializes the attributes of BaseModel"""
-
+        """initialize the instance of the class"""
         if kwargs:
             for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                elif key == '__class__':
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(
+                            value,
+                            '%Y-%m-%dT%H:%M:%S.%f')
+                elif key == "__class__":
                     continue
-
 
                 setattr(self, key, value)
         else:
@@ -25,27 +33,22 @@ class BaseModel():
             self.updated_at = datetime.now()
             models.storage.new(self)
 
-    def __str__(self):
-        """string representation of the object"""
-        return "{[]} {[]} {}".format(
-                self.__class__.__name__, self.id, self.__dict__)
-
     def save(self):
-        """
-        updates the public instance `updated_at`
-        with the current datetime
-        """
+        """save new informations to the class object"""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """
-        returns a dictionary containing all keys/values
-        of __dict__ of the instance
-        """
-        my_dict = self.__dict__.copy()
-        my_dict['__class__'] = self.__class__.__name__
-        my_dict['created_at'] = self.created_at.isoformat()
-        my_dict['updated_at'] = self.updated_at.isoformat()
+        """return dictionary representaton of the instance"""
+        dict_repr = {}
+        for key, value in self.__dict__.items():
+            dict_repr[key] = value
+            if isinstance(value, datetime):
+                dict_repr[key] = value.strftime('%Y-%m-%dT%H:%M:%S.%f')
+        dict_repr["__class__"] = type(self).__name__
+        return dict_repr
 
-        return my_dict
+    def __str__(self):
+        """return the string formated message when instance is called"""
+        clName = self.__class__.__name__
+        return "[{}] ({}) {}".format(clName, self.id, self.__dict__)
